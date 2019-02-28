@@ -1,0 +1,5 @@
+converter.log
+*.pyc
+*.xml
+.idea/
+__pychache__/
