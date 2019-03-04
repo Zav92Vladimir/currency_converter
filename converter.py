@@ -1,6 +1,7 @@
 import logging
 import argparse
 import urllib.request
+from typing import Optional
 from xml.etree import ElementTree
 from decimal import Decimal, ROUND_DOWN
 
@@ -29,18 +30,15 @@ class Converter:
         usd_rub_rate = usd_rub_rate.quantize(Decimal('.0001'), rounding=ROUND_DOWN)
         return usd_rub_rate
 
-    def get_usd_amount(self) -> float:
-        args = self.parser.parse_args()
+    def get_usd_amount(self, list_args: Optional[list] = None) -> float:
+
+        args = self.parser.parse_args(list_args)
         try:
             usd = float(args.USD)
             assert usd > 0
         except:
             raise Exception("USD value must be positive number!!!")
         return usd
-
-    def log(self, type_: str, value: str) -> None:
-        logging.basicConfig(filename="converter.log", level=logging.INFO)
-        getattr(logging, type_)(value)
 
     def run(self) -> None:
 
@@ -49,7 +47,7 @@ class Converter:
         usd_rub_rate = self.parse_xml(xml)
         rub = Decimal(usd) * usd_rub_rate
         rub = rub.quantize(Decimal('.01'), rounding=ROUND_DOWN)
-        self.log("info", "USD input: {0}; RUB output: {1}".format(usd, rub))
+        logging.info("USD input: {0}; RUB output: {1}".format(usd, rub))
         print(rub)
 
 
@@ -59,5 +57,5 @@ if __name__ == "__main__":
         converter.run()
     except Exception as exp:
         output = "{0}. {1}".format(type(exp).__name__, exp)
-        converter.log("error", output)
+        logging.error(output)
         print(output)
