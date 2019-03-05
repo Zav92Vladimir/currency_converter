@@ -5,7 +5,7 @@ from converter import Converter
 class TestConverter:
 
     def setup(self):
-        self.converter = Converter()
+        self.converter = Converter(["--USD", "10"])
 
     def test_get_currency_xml(self):
         xml = self.converter.get_currency_xml()
@@ -33,7 +33,3 @@ class TestConverter:
 
         rate = self.converter.parse_xml(xml)
         assert float(rate) == 65.8814
-
-    def test_get_usd_amount(self):
-        usd = self.converter.get_usd_amount(["--USD", "10"])
-        assert usd == 10
