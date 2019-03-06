@@ -57,6 +57,7 @@ class Converter:
         xml = response.read()
         assert xml, "response content is empty!!!"
         self.file_logger.info("received not empty response content with status code 200")
+        # just changes
         return xml
 
     def parse_xml(self, xml: bytes) -> Decimal:

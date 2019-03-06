@@ -32,4 +32,5 @@ class TestConverter:
         """
 
         rate = self.converter.parse_xml(xml)
+        # something for git
         assert float(rate) == 65.8814
